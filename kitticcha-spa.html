@@ -63,6 +63,7 @@
     <button style="background-color: rgb(0, 0, 255);" onclick="playSequence('青')">青</button>
     <button style="background-color: rgb(255, 0, 217);" onclick="playSequence('ピンク点滅2')">ピンク点滅2</button>
     <button style="background-color: rgb(255, 0, 225);" onclick="playSequence('ピンク')">ピンク</button>
+    <button style="background-color: rgb(200, 200, 200);" onclick="playSequence('音源テスト')">音源テスト</button>
 
   </div>
   <div class="canvas-container">
@@ -94,7 +95,8 @@
         "紫": [18.50, 19.25, 19.50, 19.25, 19.00, 18.75, 19.00, 19.25],
         "青": [18.50, 19.25, 19.50, 19.25, 19.50, 18.75, 19.00, 18.75],
         "ピンク点滅2": [18.50, 19.25, 19.50, 19.25, 19.50, 18.75, 19.50, 19.25],
-        "ピンク": [18.50, 19.25, 19.50, 19.25, 19.50, 19.25, 19.00, 18.75]
+        "ピンク": [18.50, 19.25, 19.50, 19.25, 19.50, 19.25, 19.00, 18.75],
+        "音源テスト": [0.44, 0.88, 1.76, 3.52, 1.76, 0.88, 0.44, 0.22]
       }
 
       return seq[color]
@@ -125,6 +127,7 @@
         "青": "rgb(0, 0, 255)",
         "ピンク点滅2": "rgb(255, 0, 217)",
         "ピンク": "rgb(255, 0, 225)",
+        "音源テスト": "rgb(200, 200, 200)",
       }
       return col[color]
     }
