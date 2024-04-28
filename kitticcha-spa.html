@@ -1,0 +1,212 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>キティっちゃ！</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      /* height: 100vh; */
+      margin: 0;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .button-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 5px;
+      margin-top: 20px;
+    }
+
+    .canvas-container {
+      margin: 10px;
+    }
+
+    button {
+      font-size: 16px;
+      cursor: pointer;
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>キティっちゃ！</h1>
+  <div class="button-container">
+    <button style="background-color: rgb(0, 128, 0);" onclick="playSequence('長黄短緑')">長黄短緑</button>
+    <button style="background-color: rgb(255, 255, 0);" onclick="playSequence('黄')">黄</button>
+    <button style="background-color: rgb(173, 216, 230);" onclick="playSequence('水色点滅')">水色点滅</button>
+    <button style="background-color: rgb(0, 128, 0);" onclick="playSequence('緑点滅')">緑点滅</button>
+    <button style="background-color: rgb(75, 0, 130);" onclick="playSequence('紫青')">紫青</button>
+    <button style="background-color: rgb(135, 206, 235);" onclick="playSequence('水色')">水色</button>
+    <button style="background-color: rgb(49, 79, 79);" onclick="playSequence('紫青高速')">紫青高速</button>
+    <button style="background-color: rgb(100,100,100);" onclick="playSequence('消灯')">消灯</button>
+    <button style="background-color: rgb(255, 192, 203);" onclick="playSequence('ピンク(白)')">ピンク(白)</button>
+    <button style="background-color: rgb(252, 252, 153);" onclick="playSequence('水黄')">水黄</button>
+    <button style="background-color: rgb(100,100,100);" onclick="playSequence('消灯2')">消灯2</button>
+    <button style="background-color: rgb(255, 165, 0);" onclick="playSequence('オレンジ')">オレンジ</button>
+    <button style="background-color: rgb(255, 182, 193);" onclick="playSequence('ピンク黄水')">ピンク黄水</button>
+    <button style="background-color: rgb(251, 163, 207);" onclick="playSequence('薄ピンク点減(白)')">薄ピンク点減(白)</button>
+    <button style="background-color: rgb(229, 17, 123);" onclick="playSequence('ピンク赤')">ピンク赤</button>
+    <button style="background-color: rgb(255, 255, 0);" onclick="playSequence('黄色点滅')">黄色点滅</button>
+    <button style="background-color: rgb(0, 204, 255);" onclick="playSequence('水色点滅2')">水色点滅2</button>
+    <button style="background-color: rgb(221, 10, 45);" onclick="playSequence('赤点滅')">赤点滅</button>
+    <button style="background-color: rgb(238, 74, 210);" onclick="playSequence('ピンク点滅')">ピンク点滅</button>
+    <button style="background-color: rgb(153, 0, 255);" onclick="playSequence('紫')">紫</button>
+    <button style="background-color: rgb(0, 0, 255);" onclick="playSequence('青')">青</button>
+    <button style="background-color: rgb(255, 0, 217);" onclick="playSequence('ピンク点滅2')">ピンク点滅2</button>
+    <button style="background-color: rgb(255, 0, 225);" onclick="playSequence('ピンク')">ピンク</button>
+
+  </div>
+  <div class="canvas-container">
+    <canvas id="canvas" width="300" , height="300">;</canvas>
+  </div>
+
+  <script>
+    function getColorSequence(color) {
+      const seq = {
+        "長黄短緑": [18.50, 18.75, 19.00, 18.75, 19.00, 18.75, 19.00, 19.25],
+        "黄": [18.50, 18.75, 19.00, 18.75, 19.00, 19.25, 19.00, 19.25],
+        "水色点滅": [18.50, 18.75, 19.00, 19.25, 19.50, 18.75, 19.50, 18.75],
+        "緑点滅": [18.50, 18.75, 19.00, 19.25, 19.50, 18.75, 19.50, 19.25],
+        "紫青": [18.50, 18.75, 19.50, 18.75, 19.00, 18.75, 19.00, 18.75],
+        "水色": [18.50, 18.75, 19.50, 19.25, 19.00, 19.25, 19.00, 18.75],
+        "紫青高速": [18.50, 18.75, 19.50, 19.25, 19.50, 18.75, 19.00, 19.25],
+        "消灯": [18.50, 18.75, 19.50, 19.25, 19.50, 19.25, 19.50, 18.75],
+        "ピンク(白)": [18.50, 19.25, 19.00, 18.75, 19.00, 18.75, 19.50, 18.75],
+        "水黄": [18.50, 19.25, 19.00, 18.75, 19.00, 18.75, 19.50, 19.25],
+        "消灯2": [18.50, 19.25, 19.00, 18.75, 19.00, 19.25, 19.50, 18.75],
+        "オレンジ": [18.50, 19.25, 19.00, 18.75, 19.50, 19.25, 19.00, 18.75],
+        "ピンク黄水": [18.50, 19.25, 19.00, 19.25, 19.50, 18.75, 19.50, 18.75],
+        "薄ピンク点減(白)": [18.50, 19.25, 19.00, 19.25, 19.50, 19.25, 19.50, 19.25],
+        "ピンク赤": [18.50, 19.25, 19.50, 18.75, 19.00, 18.75, 19.50, 19.25],
+        "黄色点滅": [18.50, 19.25, 19.50, 18.75, 19.00, 19.25, 19.00, 19.25],
+        "水色点滅2": [18.50, 19.25, 19.50, 18.75, 19.00, 19.25, 19.50, 19.25],
+        "赤点滅": [18.50, 19.25, 19.50, 18.75, 19.50, 18.75, 19.50, 19.25],
+        "ピンク点滅": [18.50, 19.25, 19.50, 19.25, 19.50, 19.25, 19.50, 19.25],
+        "紫": [18.50, 19.25, 19.50, 19.25, 19.00, 18.75, 19.00, 19.25],
+        "青": [18.50, 19.25, 19.50, 19.25, 19.50, 18.75, 19.00, 18.75],
+        "ピンク点滅2": [18.50, 19.25, 19.50, 19.25, 19.50, 18.75, 19.50, 19.25],
+        "ピンク": [18.50, 19.25, 19.50, 19.25, 19.50, 19.25, 19.00, 18.75]
+      }
+
+      return seq[color]
+    }
+
+    function getColorCode(color) {
+      const col = {
+        "長黄短緑": "rgb(0, 128, 0)",
+        "黄": "rgb(255, 255, 0)",
+        "水色点滅": "rgb(173, 216, 230)",
+        "緑点滅": "rgb(0, 128, 0)",
+        "紫青": "rgb(75, 0, 130)",
+        "水色": "rgb(135, 206, 235)",
+        "紫青高速": "rgb(49, 79, 79)",
+        "消灯": "rgb(100,100,100)",
+        "ピンク(白)": "rgb(255, 192, 203)",
+        "水黄": "rgb(252, 252, 153)",
+        "消灯2": "rgb(100,100,100)",
+        "オレンジ": "rgb(255, 165, 0)",
+        "ピンク黄水": "rgb(255, 182, 193)",
+        "薄ピンク点減(白)": "rgb(251, 163, 207)",
+        "ピンク赤": "rgb(229, 17, 123)",
+        "黄色点滅": "rgb(255, 255, 0)",
+        "水色点滅2": "rgb(0, 204, 255)",
+        "赤点滅": "rgb(221, 10, 45)",
+        "ピンク点滅": "rgb(238, 74, 210)",
+        "紫": "rgb(153, 0, 255)",
+        "青": "rgb(0, 0, 255)",
+        "ピンク点滅2": "rgb(255, 0, 217)",
+        "ピンク": "rgb(255, 0, 225)",
+      }
+      return col[color]
+    }
+
+    function logColor(color) {
+      console.log(`Execute: ${color}. Sequence: ${getColorSequence(color)}`);
+    }
+
+    function playSequence(color) {
+      logColor(color)
+      const seq = getColorSequence(color)
+      const col = getColorCode(color)
+      const audioContext = new AudioContext();
+
+      const buffer = audioContext.createBuffer(
+        1,
+        audioContext.sampleRate * 1,
+        audioContext.sampleRate
+      );
+
+      const channelData = buffer.getChannelData(0);
+
+      for (let i = 0; i < buffer.length; i++) {
+        channelData[i] = Math.random() * 2 - 1;
+      }
+
+      const primaryGainControl = audioContext.createGain();
+      primaryGainControl.gain.setValueAtTime(0.05, 0);
+
+      primaryGainControl.connect(audioContext.destination);
+
+      const analyser = audioContext.createAnalyser();
+      analyser.fftSize = 2048;
+      const bufferLength = analyser.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+
+      const canvas = document.querySelector('canvas');
+      const canvasContext = canvas.getContext('2d');
+      const WIDTH = 600;
+      const HEIGHT = 600;
+      canvasContext.clearRect(0, 0, WIDTH, HEIGHT);
+      function draw() {
+        var drawVisual = requestAnimationFrame(draw);
+        analyser.getByteTimeDomainData(dataArray);
+        canvasContext.fillStyle = 'rgb(255,255,255)';
+        canvasContext.fillRect(0, 0, WIDTH, HEIGHT);
+        canvasContext.lineWidth = 2;
+        canvasContext.strokeStyle = col;
+        canvasContext.beginPath();
+        var sliceWidth = (WIDTH * 1.0) / bufferLength;
+        var x = 0;
+
+        for (var i = 0; i < bufferLength; i++) {
+          var v = dataArray[i] / 128.0;
+          var y = (v * HEIGHT) / 2;
+
+          if (i === 0) {
+            canvasContext.moveTo(x, y);
+          } else {
+            canvasContext.lineTo(x, y);
+          }
+          x += sliceWidth;
+        }
+
+        canvasContext.lineTo(canvas.width, canvas.height / 2);
+        canvasContext.stroke();
+      }
+
+      draw();
+
+      const operator1 = audioContext.createOscillator();
+      for (let i = 0; i < seq.length; i++) {
+        operator1.frequency.setValueAtTime(seq[i] * 1000, audioContext.currentTime + i / 8);
+      }
+
+      const operatorGain = audioContext.createGain();
+      operator1.connect(primaryGainControl);
+      operator1.connect(analyser);
+      operator1.start(audioContext.currentTime);
+      operator1.stop(audioContext.currentTime + 1);
+    }
+  </script>
+</body>
+
+</html>
